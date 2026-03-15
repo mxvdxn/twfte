@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE WORLD FORGOT TO END</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #f0f0f0;
+  --red: #ff2200;
+  --border: rgba(240,240,240,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* BG VIDEO */
+.bg-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-video video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+}
+
+.bg-video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.55);
+}
+
+/* EVERYTHING ABOVE BG */
+.site-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+}
+
+.header-left {
+  padding: 18px 32px;
+  border-right: 1px solid var(--border);
+}
+
+.header-logo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.header-right {
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-tag {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(240,240,240,0.3);
+  text-transform: uppercase;
+}
+
+.header-dot {
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--border);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  padding: 80px 32px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+
+.hero-index {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: rgba(240,240,240,0.25);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: clamp(72px, 14vw, 200px);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.2s forwards;
+}
+
+.hero-title .word-red {
+  color: var(--red);
+  display: block;
+}
+
+.hero-title .word-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--white);
+  display: block;
+}
+
+.hero-title .word-white {
+  display: block;
+}
+
+.hero-meta {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.5s forwards;
+}
+
+.hero-tagline {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(13px, 2vw, 17px);
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: rgba(240,240,240,0.5);
+  text-transform: uppercase;
+}
+
+.hero-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 200px;
+}
+
+/* TICKER */
+.ticker {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+  background: rgba(255,34,0,0.04);
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 20s linear infinite;
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.ticker-inner span {
+  margin: 0 48px;
+  color: rgba(240,240,240,0.15);
+}
+
+/* POSTER SECTION */
+.poster-section {
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 420px 1fr;
+}
+
+.poster-left {
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.poster-left img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(20%) contrast(1.05);
+  transition: filter 0.4s ease;
+}
+
+.poster-left:hover img {
+  filter: grayscale(0%) contrast(1.1);
+}
+
+.watch-btn {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 32px;
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--white);
+  transition: background 0.2s;
+}
+
+.watch-btn:hover {
+  background: var(--red);
+}
+
+.watch-btn-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+.watch-btn-arrow {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* POSTER RIGHT PANEL */
+.poster-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-block {
+  padding: 32px;
+  border-bottom: 1px solid var(--border);
+  flex: 1;
+}
+
+.info-block:last-child {
+  border-bottom: none;
+}
+
+.info-block-label {
+  font-size: 8px;
+  letter-spacing: 5px;
+  color: rgba(240,240,240,0.25);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.info-block-value {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.info-block-value.small {
+  font-size: 13px;
+  font-weight: 400;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0;
+  line-height: 1.8;
+  color: rgba(240,240,240,0.55);
+}
+
+.info-block-value .red {
+  color: var(--red);
+}
+
+/* SYNOPSIS */
+.synopsis-section {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.synopsis-label-col {
+  border-right: 1px solid var(--border);
+  padding: 48px 32px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.synopsis-label-col span {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: rgba(240,240,240,0.2);
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.synopsis-content {
+  padding: 48px 48px 48px 48px;
+}
+
+.synopsis-content p {
+  font-size: 13px;
+  line-height: 2.1;
+  color: rgba(240,240,240,0.55);
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.synopsis-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* CLASSIFICATION GRID */
+.class-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.class-cell {
+  padding: 40px 32px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.class-cell:last-child {
+  border-right: none;
+}
+
+.class-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.class-cell:hover::before {
+  transform: scaleX(1);
+}
+
+.class-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: rgba(240,240,240,0.04);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.class-label {
+  font-size: 8px;
+  letter-spacing: 5px;
+  color: rgba(240,240,240,0.25);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.class-value {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.class-sub {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--red);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* CREDITS + TOOLS */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.bottom-col {
+  padding: 48px 32px;
+  border-right: 1px solid var(--border);
+}
+
+.bottom-col:last-child {
+  border-right: none;
+}
+
+.bottom-col-header {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 7px;
+  color: rgba(240,240,240,0.2);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.credit-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(240,240,240,0.04);
+}
+
+.credit-row:last-child {
+  border-bottom: none;
+}
+
+.credit-row-role {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(240,240,240,0.25);
+  text-transform: uppercase;
+}
+
+.credit-row-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+/* FOOTER */
+footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 20px 32px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-left {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(240,240,240,0.2);
+  text-transform: uppercase;
+}
+
+.footer-right {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: rgba(240,240,240,0.15);
+  text-transform: uppercase;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .poster-section { grid-template-columns: 1fr; }
+  .poster-right { display: none; }
+  .synopsis-section { grid-template-columns: 1fr; }
+  .synopsis-label-col { display: none; }
+  .class-section { grid-template-columns: 1fr; }
+  .class-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .bottom-grid { grid-template-columns: 1fr; }
+  .bottom-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-title { font-size: clamp(56px, 16vw, 120px); }
+  footer { grid-template-columns: 1fr; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BG VIDEO -->
+<div class="bg-video">
+  <video autoplay muted loop playsinline>
+    <source src="https://mxvdxn.github.io/video_files/0315.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="site-wrap">
+
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-index">// 001 — PILOT</div>
+      <h1 class="hero-title">
+        <span class="word-white">THE</span>
+        <span class="word-outline">WORLD</span>
+        <span class="word-white">FORGOT</span>
+        <span class="word-red">TO END</span>
+      </h1>
+      <div class="hero-meta">
+        <div class="hero-tagline">A world that cannot die. Cannot be reborn.</div>
+        <div class="hero-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      THE WORLD FORGOT TO END <span>✦</span> KREVA MAH <span>✦</span> THE SARAAN <span>✦</span> RAVEEN TIER 09 <span>✦</span> PILOT 2026 <span>✦</span> THE VAARA BLOOMS <span>✦</span> SOME PRAYERS WERE NEVER MEANT TO FINISH <span>✦</span> THE WORLD FORGOT TO END <span>✦</span> KREVA MAH <span>✦</span> THE SARAAN <span>✦</span> RAVEEN TIER 09 <span>✦</span> PILOT 2026 <span>✦</span> THE VAARA BLOOMS <span>✦</span> SOME PRAYERS WERE NEVER MEANT TO FINISH <span>✦</span>
+    </div>
+  </div>
+
+  <!-- POSTER + INFO -->
+  <section class="poster-section">
+    <div class="poster-left">
+      <img src="https://raw.githubusercontent.com/mxvdxn/mxvdxn.github.io/refs/heads/main/image_files/twfte_poster.png" alt="THE WORLD FORGOT TO END Poster">
+      <a href="https://youtu.be/ilm-JKq3OYk?si=7wN_QM3DPGo4ai_z" target="_blank" class="watch-btn">
+        <span class="watch-btn-label">Watch on YouTube</span>
+        <span class="watch-btn-arrow">↗</span>
+      </a>
+    </div>
+    <div class="poster-right">
+      <div class="info-block">
+        <div class="info-block-label">Classification</div>
+        <div class="info-block-value">KREVA MAH<br><span class="red">Class 03</span></div>
+        <div class="info-block-value small" style="margin-top:12px;">A construct of unknown origin. Massive. Armored. It does not stop moving until something stops it permanently.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-block-label">Operative</div>
+        <div class="info-block-value">RAVEEN<br><span class="red">Tier 09</span></div>
+        <div class="info-block-value small" style="margin-top:12px;">She was found already moving. No memory of before. One weapon. One purpose. Nobody knows what she is.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-block-label">World</div>
+        <div class="info-block-value">THE SARAAN</div>
+        <div class="info-block-value small" style="margin-top:12px;">A fractured place. Neither dead nor alive. It has been waiting for something to finish what was started.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-block-label">Event</div>
+        <div class="info-block-value small">A cosmic dissolution that went wrong. The world was supposed to end. It didn't.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYNOPSIS -->
+  <section class="synopsis-section">
+    <div class="synopsis-label-col">
+      <span>Synopsis</span>
+    </div>
+    <div class="synopsis-content">
+      <p>A lone woman moves through a dead world. Temple spires and collapsed buildings drift under a pale grey sky. She carries one weapon. She asks no questions. Something finds her.</p>
+      <p>The world she walks through has no name she knows of. It does not age. It does not heal. The ruins of a civilization long fractured hang suspended in the air around her — caught between collapse and something that never came after.</p>
+      <p>She has no memory of before. She has a mission. That is enough. For now.</p>
+    </div>
+  </section>
+
+  <!-- CLASSIFICATION GRID -->
+  <section class="class-section">
+    <div class="class-cell">
+      <div class="class-num">01</div>
+      <div class="class-label">Format</div>
+      <div class="class-value">Generative<br>AI Film</div>
+      <div class="class-sub">Pilot Episode</div>
+    </div>
+    <div class="class-cell" style="grid-column: span 2; border-right: none;">
+      <div class="class-num">02</div>
+      <div class="class-label" style="margin-bottom: 20px;">Statement</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
+        <p style="font-size: 13px; line-height: 2; color: rgba(240,240,240,0.55);">
+          Generative AI video has made remarkable progress in a short amount of time. What once required entire production pipelines can now be explored by a single person with the right tools. The limitations are still real — consistency, physics, fine control — but the gap between idea and execution has never been smaller.
+        </p>
+        <p style="font-size: 13px; line-height: 2; color: rgba(240,240,240,0.55);">
+          This project is an attempt to push that boundary — specifically around action sequences and micro storytelling. With Omni-Reference now available across most leading video models, character consistency across shots has become genuinely achievable. This pilot tests exactly that: how far the technology holds when the story demands movement, tension, and continuity.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDITS + TOOLS -->
+  <div class="bottom-grid">
+    <div class="bottom-col">
+      <div class="bottom-col-header">Credits</div>
+      <div class="credit-row">
+        <div class="credit-row-role">Directed by</div>
+        <div class="credit-row-name">Dan Pradana</div>
+      </div>
+    </div>
+    <div class="bottom-col">
+      <div class="bottom-col-header">Tools</div>
+      <div class="credit-row">
+        <div class="credit-row-role">Video Animated with</div>
+        <div class="credit-row-name">Kling 3.0 Omni</div>
+      </div>
+      <div class="credit-row">
+        <div class="credit-row-role">Character Sheet</div>
+        <div class="credit-row-name">Google Nano Banana 2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">© 2026 MXDXN — All rights reserved</div>
+    <a href="https://mxvdxn.github.io/" target="_blank" style="font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 5px; color: rgba(240,240,240,0.35); text-transform: uppercase; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff2200'" onmouseout="this.style.color='rgba(240,240,240,0.35)'">MXDXN.GITHUB.IO ↗</a>
+  </footer>
+
+</div>
+</body>
+</html>
