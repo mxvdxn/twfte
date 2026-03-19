@@ -201,76 +201,42 @@ header {
   color: rgba(240,240,240,0.15);
 }
 
-/* POSTER SECTION */
-.poster-section {
+/* FILM SECTION */
+.film-section {
   border-bottom: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: 420px 1fr;
 }
 
-.poster-left {
-  border-right: 1px solid var(--border);
+/* EMBED */
+.embed-wrap {
+  border-bottom: 1px solid var(--border);
   position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
   overflow: hidden;
 }
 
-.poster-left img {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: grayscale(20%) contrast(1.05);
-  transition: filter 0.4s ease;
-}
-
-.poster-left:hover img {
-  filter: grayscale(0%) contrast(1.1);
-}
-
-.watch-btn {
+.embed-wrap iframe {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 20px 32px;
-  background: var(--black);
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-decoration: none;
-  color: var(--white);
-  transition: background 0.2s;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
 }
 
-.watch-btn:hover {
-  background: var(--red);
-}
-
-.watch-btn-label {
-  font-family: 'Oswald', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-}
-
-.watch-btn-arrow {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-/* POSTER RIGHT PANEL */
-.poster-right {
-  display: flex;
-  flex-direction: column;
+/* INFO PANEL BELOW EMBED */
+.info-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .info-block {
   padding: 32px;
-  border-bottom: 1px solid var(--border);
-  flex: 1;
+  border-right: 1px solid var(--border);
 }
 
 .info-block:last-child {
-  border-bottom: none;
+  border-right: none;
 }
 
 .info-block-label {
@@ -510,8 +476,8 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .poster-section { grid-template-columns: 1fr; }
-  .poster-right { display: none; }
+  .info-panel { grid-template-columns: 1fr 1fr; }
+  .info-block { border-right: none; border-bottom: 1px solid var(--border); }
   .synopsis-section { grid-template-columns: 1fr; }
   .synopsis-label-col { display: none; }
   .class-section { grid-template-columns: 1fr; }
@@ -560,16 +526,12 @@ footer {
     </div>
   </div>
 
-  <!-- POSTER + INFO -->
-  <section class="poster-section">
-    <div class="poster-left">
-      <img src="https://raw.githubusercontent.com/mxvdxn/mxvdxn.github.io/refs/heads/main/image_files/twfte_poster.png" alt="THE WORLD FORGOT TO END Poster">
-      <a href="https://youtu.be/ilm-JKq3OYk?si=7wN_QM3DPGo4ai_z" target="_blank" class="watch-btn">
-        <span class="watch-btn-label">Watch on YouTube</span>
-        <span class="watch-btn-arrow">↗</span>
-      </a>
+  <!-- FILM EMBED + INFO -->
+  <section class="film-section">
+    <div class="embed-wrap">
+      <iframe src="https://www.youtube.com/embed/ilm-JKq3OYk" title="THE WORLD FORGOT TO END" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
-    <div class="poster-right">
+    <div class="info-panel">
       <div class="info-block">
         <div class="info-block-label">Classification</div>
         <div class="info-block-value">KREVA MAH<br><span class="red">Class 03</span></div>
