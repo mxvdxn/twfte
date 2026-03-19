@@ -209,14 +209,21 @@ header {
 /* EMBED */
 .embed-wrap {
   border-bottom: 1px solid var(--border);
+  padding: 48px 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+}
+
+.embed-inner {
   position: relative;
   width: 100%;
+  max-width: 800px;
   aspect-ratio: 16 / 9;
-  background: #000;
   overflow: hidden;
 }
 
-.embed-wrap iframe {
+.embed-inner iframe {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -529,7 +536,9 @@ footer {
   <!-- FILM EMBED + INFO -->
   <section class="film-section">
     <div class="embed-wrap">
-      <iframe src="https://www.youtube.com/embed/ilm-JKq3OYk" title="THE WORLD FORGOT TO END" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <div class="embed-inner">
+        <iframe src="https://www.youtube.com/embed/ilm-JKq3OYk" title="THE WORLD FORGOT TO END" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
     </div>
     <div class="info-panel">
       <div class="info-block">
